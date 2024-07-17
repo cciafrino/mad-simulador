@@ -16,7 +16,7 @@ fun exportData(fname: String, sampler: RandGen) {
     if (!verifyPath(path)) return
 
     val simulations = mutableMapOf<Int, SimulationMetrics>()
-    (50..99).forEach {
+    listOf(50, 80, 90, 99).forEach {
         val lambda = it / 100.0
         val simulation = Simulation(100, 10_000, { exponentialRandom(lambda) }, sampler)
         simulation.apply {
