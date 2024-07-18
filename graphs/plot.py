@@ -51,21 +51,22 @@ def plot(data, title):
 
     #plt.plot(x, tisam, label='Time In System (All)', color='blue')
     tisplot = ax1.plot(x, tiscm, label='Avg Time In System', color='green')
+    ax1.fill_between(x, tiscq1, tiscq3, color='green', alpha=0.2, label='Avg Time In System (IQR)')
     #plt.plot(x, tiqam, label='Time In Queue (All)', color='red')
     tiqplot = ax1.plot(x, tiqcm, label='Avg Time In Queue', color='red')
     #plt.fill_between(x, [a-b for a,b in zip(tisam, tisav)], [a+b for a,b in zip(tisam, tisav)], color='blue', alpha=0.2)
     #plt.fill_between(x, [a-b for a,b in zip(tiscm, tiscv)], [a+b for a,b in zip(tiscm, tiscv)], color='green', alpha=0.2)
     #plt.fill_between(x, [a-b for a,b in zip(tiqam, tiqav)], [a+b for a,b in zip(tiqam, tiqav)], color='red', alpha=0.2)
     #plt.fill_between(x, [a-b for a,b in zip(tiqcm, tiqcv)], [a+b for a,b in zip(tiqcm, tiqcv)], color='red', alpha=0.2)
-    ax1.fill_between(x, tiscq1, tiscq3, color='green', alpha=0.2)
-    ax1.fill_between(x, tiqcq1, tiqcq3, color='red', alpha=0.2)
+    #ax1.fill_between(x, tiqcq1, tiqcq3, color='red', alpha=0.2)
 
     ax2 = ax1.twinx()
     n_means = 10
     intervals, mean_completeds = get_n_indexed_means(x, completed, n_means)
     #heights = (mean_completeds / mean_completeds.max()) * max(np.array(tiscm).max(), np.array(tiqcm).max())
     ax2.set_ylabel('Number of completed tasks')
-    cbplot = ax2.bar(x[intervals[:-1]], mean_completeds, label='Completed', color='blue', alpha=0.2, width=0.5/(n_means+1), align='edge')
+    cbplot = ax2.bar(x[intervals[:-1]], mean_completeds, label='Completed jobs', color='blue', alpha=0.2, width=0.5/(n_means+1), align='edge')
+    ax2.bar_label(cbplot, label_type='edge', color='black', fontsize=8)
 
 
     fig.suptitle(title)
